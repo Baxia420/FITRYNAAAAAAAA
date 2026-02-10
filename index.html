@@ -17,7 +17,7 @@
             justify-content: center; 
             margin: 0;
             overflow: hidden; 
-            font-family: 'Arial', sans-serif; /* Default font */
+            font-family: 'Arial', sans-serif;
         }
 
         .intro-wrapper { 
@@ -67,29 +67,27 @@
             animation: fadeIn 1s ease; 
         }
 
-        /* NEW: The Lined Paper Style */
         .letter-paper { 
             flex: 1;
-            max-width: 700px;
-            background-color: #fffef0; /* Off-white paper color */
-            /* CSS trick to draw notebook lines */
-            background-image: repeating-linear-gradient(to bottom, transparent 0px, transparent 29px, #AFCBFF 30px);
-            line-height: 30px; /* Matches the grid line spacing so text sits on the line */
+            max-width: 800px;
+            background-color: #fffef0; 
+            /* Grid lines adjusted for the larger font */
+            background-image: repeating-linear-gradient(to bottom, transparent 0px, transparent 39px, #AFCBFF 40px);
+            line-height: 40px; 
             padding: 30px 40px;
-            box-shadow: 5px 5px 20px rgba(0,0,0,0.2); /* Gives it depth */
-            font-family: 'Indie Flower', cursive; /* Handwriting font */
-            font-size: 1.6rem;
+            box-shadow: 5px 5px 20px rgba(0,0,0,0.2); 
+            font-family: 'Indie Flower', cursive; 
+            font-size: 2.2rem;
             color: #333;
             text-align: left;
             position: relative;
-            transform: rotate(-1deg); /* Slight tilt to make it look real */
+            /* Rotation removed for perfect alignment */
         }
 
-        /* Timer specific styling to stand out slightly on the paper */
         #timer {
             font-weight: bold;
             color: #db4e4e;
-            background-color: rgba(255, 255, 220, 0.8); /* Slight highlight behind numbers */
+            background-color: rgba(255, 255, 220, 0.8); 
             padding: 0 5px;
             border-radius: 5px;
         }
@@ -108,7 +106,7 @@
         @media (max-width: 900px) {
             #message-content { flex-direction: column; gap: 20px; }
             .side-cat { width: 120px; }
-            .letter-paper { width: 90%; font-size: 1.3rem; order: -1;}
+            .letter-paper { width: 90%; font-size: 1.6rem; line-height: 30px; background-image: repeating-linear-gradient(to bottom, transparent 0px, transparent 29px, #AFCBFF 30px); order: -1;}
             .dancing-kitty { margin-top: 0; }
         }
     </style>
@@ -144,26 +142,20 @@
     </div>
 
     <script>
-        // 1. Reveal functionality
         function openLetter() {
             document.getElementById('envelope-container').style.display = 'none';
             document.getElementById('message-content').style.display = 'flex';
             document.getElementById('proceed-btn').style.display = 'block';
-            // Start the timer only after the letter is opened
             setInterval(updateTimer, 1000);
             updateTimer(); 
         }
 
-        // 2. Timer Logic (Jan 10, 2026, 10:25 PM)
-        // NOTE: Ensure this date is correct. If it's in the future relative to now, it will show negative numbers.
-        // If you meant Jan 10, 2025 (past), change 2026 to 2025 below.
         const startDate = new Date("January 10, 2026 22:25:00").getTime();
 
         function updateTimer() {
             const now = new Date().getTime();
             const distance = now - startDate;
 
-            // Basic check to prevent weird negatives if testing before the date
             if (distance < 0) {
                  document.getElementById("timer").innerHTML = "a little while";
                  return;

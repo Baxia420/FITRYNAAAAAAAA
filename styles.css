@@ -16,7 +16,6 @@ body {
     text-align: center;
     margin: 0;
     padding: 75px 0;
-    /* Use the pixel heart background instead of the gradient */
     background-image: url("heart-bg.jpg"); 
     background-size: cover;
     font-family: "Steph", sans-serif;
@@ -34,25 +33,51 @@ body {
     font-weight: bold;
 }
 
+/* Frosted Glass Container for Yay page readability */
 .container {
-    max-width: 100%;
+    max-width: 90%;
     margin: 20px auto 0 auto;
+    background: rgba(255, 255, 255, 0.75); 
+    backdrop-filter: blur(8px);
+    padding: 40px;
+    border-radius: 30px;
+    display: inline-block;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
 }
 
 #togepi-gif {
     width: 500px;
     height: 400px;
     object-fit: cover;
+    border-radius: 15px;
 }
 
 h1 {
     font-size: 3rem;
     margin: 50px auto;
+    color: #333;
+}
+
+.header_text {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-top: 25px;
+    color: #db4e4e;
+    line-height: 1.2;
+}
+
+.text-small {
+    font-size: 1.5rem;
+    margin-top: 15px;
+    color: #555;
+    font-weight: 600;
 }
 
 .btn-container {
     display: flex;
     justify-content: center;
+    align-items: center;
     gap: 75px;
 }
 
@@ -70,11 +95,11 @@ button {
 }
 
 button:hover {
-    scale: 1.05;
+    transform: scale(1.05);
 }
 
 #yes-btn {
-    transform-origin: center top;
+    transform-origin: center;
     color: white;
     background-color: #57915e;
 }
@@ -82,109 +107,50 @@ button:hover {
 #no-btn {
     color: white;
     background-color: #db4e4e;
-}
-
-@media (max-width: 1150px) {
-:root {
-    --gap-scale-factor: 200;
-}
-
-body {
-    padding-top: 70px;
-}
-.container {
-    max-width: 100%;
-    margin: 0;
-}
-
-#togepi-gif {
-    width: 380px;
-    height: 304px;
-    object-fit: cover;
-}
-
-h1 {
-    font-size: 2rem;
-    margin: 50px auto;
-}
-
-.btn-container {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-}
-
-button {
-    border-radius: 8px;
-    min-width: 100px;
-    max-width: 400px;
-    border: none;
-    cursor: pointer;
-    padding: 10px 12px;
-    white-space: nowrap;
-    font-size: 1rem;
-    font-weight: 600;
-    transition: transform 0.1s ease;
-}
-}
-
-@media (max-width: 600px) {
-:root {
-    --gap-scale-factor: 50;
-}
-body {
-    padding-top: 100px;
-}
-.container {
-    max-width: 100%;
-    margin: 0;
-}
-
-#togepi-gif {
-    width: 300px;
-    height: 240px;
-    object-fit: cover;
-}
-
-h1 {
-    font-size: 1.4rem;
-    margin: 32px auto;
-}
-
-.btn-container {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-}
-
-button {
-    border-radius: 8px;
-    min-width: 60px;
-    max-width: 175px;
-    border: none;
-    cursor: pointer;
-    padding: 10px 12px;
-    white-space: nowrap;
-    font-size: 0.8rem;
-    font-weight: 600;
-    transition: transform 0.1s ease;
-}
-}  
-#no-btn {
-    /* Existing styles like background-color, etc... */
-    
-    /* ADD THIS LINE TO STOP JUMPING: */
-    min-width: 150px; /* Reserves space so short text doesn't shrink the button */
-    
-    /* Optional: Ensure text doesn't break the layout if it gets really long */
-    white-space: nowrap; 
+    min-width: 180px; 
     padding: 10px 20px;
 }
 
-/* Also ensure your button container handles alignment well */
-.btn-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 20px; /* Keeps a consistent gap between Yes and No */
+/* Responsiveness for Tablets */
+@media (max-width: 1150px) {
+    body {
+        padding-top: 70px;
+    }
+    #togepi-gif {
+        width: 380px;
+        height: 304px;
+    }
+    h1, .header_text {
+        font-size: 2rem;
+    }
+    .btn-container {
+        gap: 20px;
+    }
+}
+
+/* Responsiveness for Mobile */
+@media (max-width: 600px) {
+    body {
+        padding-top: 100px;
+    }
+    .container {
+        padding: 20px;
+    }
+    #togepi-gif {
+        width: 280px;
+        height: 224px;
+    }
+    h1, .header_text {
+        font-size: 1.4rem;
+    }
+    .text-small {
+        font-size: 1rem;
+    }
+    .btn-container {
+        gap: 10px;
+    }
+    button {
+        min-width: 120px;
+        font-size: 0.8rem;
+    }
 }
