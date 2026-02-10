@@ -8,8 +8,8 @@ const messages = [
     "Are you sure?",
     "Are you really sure?",
     "Pookie Please?",
-    "Please say yes!",
     "Even Melody is sad!",
+    "Please say yes!",
     "Last chance to say yes!"
 ];
 
