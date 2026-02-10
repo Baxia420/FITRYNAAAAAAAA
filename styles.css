@@ -170,3 +170,21 @@ button {
     transition: transform 0.1s ease;
 }
 }  
+#no-btn {
+    /* Existing styles like background-color, etc... */
+    
+    /* ADD THIS LINE TO STOP JUMPING: */
+    min-width: 150px; /* Reserves space so short text doesn't shrink the button */
+    
+    /* Optional: Ensure text doesn't break the layout if it gets really long */
+    white-space: nowrap; 
+    padding: 10px 20px;
+}
+
+/* Also ensure your button container handles alignment well */
+.btn-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px; /* Keeps a consistent gap between Yes and No */
+}

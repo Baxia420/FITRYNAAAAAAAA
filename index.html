@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>A Special Letter</title>
+    <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <style>
         /* Base Setup */
@@ -16,6 +17,7 @@
             justify-content: center; 
             margin: 0;
             overflow: hidden; 
+            font-family: 'Arial', sans-serif; /* Default font */
         }
 
         .intro-wrapper { 
@@ -27,14 +29,14 @@
             max-width: 1200px;
         }
 
-        /* 1. SPARKLE ANIMATION */
+        /* --- ANIMATIONS --- */
         @keyframes sparkle {
             0% { transform: scale(1); filter: drop-shadow(0 0 0px #fff); }
             50% { transform: scale(1.05); filter: drop-shadow(0 0 20px #fff); }
             100% { transform: scale(1); filter: drop-shadow(0 0 0px #fff); }
         }
 
-        /* Container */
+        /* --- ENVELOPE SECTION --- */
         #envelope-container { 
             cursor: pointer; 
             display: flex;
@@ -42,79 +44,72 @@
             align-items: center;
             transition: transform 0.2s;
         }
-        
         #envelope-container:hover { transform: scale(1.02); }
-
-        /* Envelope Image with Animation */
         #envelope { 
-            width: 350px; 
-            height: auto; 
-            margin-bottom: 20px; 
+            width: 350px; height: auto; margin-bottom: 20px; 
             animation: sparkle 2s infinite ease-in-out; 
         }
-
-        /* 2. PROMPT TEXT */
         .prompt-text {
-            font-size: 2.2rem;
-            font-weight: bold;
-            color: #db4e4e;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 1), 
-                         0 0 5px rgba(255, 255, 255, 1);
+            font-size: 2.2rem; font-weight: bold; color: #db4e4e;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 1), 0 0 5px rgba(255, 255, 255, 1);
             background: rgba(255, 255, 255, 0.6); 
-            padding: 10px 25px;
-            border-radius: 20px;
-            display: inline-block;
-            transform: translateZ(0); 
+            padding: 10px 25px; border-radius: 20px; display: inline-block;
         }
 
-        /* 3. MESSAGE CONTENT */
+        /* --- THE LETTER SECTION --- */
         #message-content { 
             display: none; 
             align-items: center; 
             justify-content: center; 
-            gap: 50px; 
+            gap: 30px; 
             padding: 20px; 
             width: 100%;
             animation: fadeIn 1s ease; 
         }
 
-        .intro-text { 
-            flex: 1; 
-            font-size: 1.8rem; 
-            line-height: 1.8; 
-            background: rgba(255, 255, 255, 0.9); 
-            padding: 40px; 
-            border-radius: 20px; 
-            border: 3px dashed #ff8da1; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        /* NEW: The Lined Paper Style */
+        .letter-paper { 
+            flex: 1;
+            max-width: 700px;
+            background-color: #fffef0; /* Off-white paper color */
+            /* CSS trick to draw notebook lines */
+            background-image: repeating-linear-gradient(to bottom, transparent 0px, transparent 29px, #AFCBFF 30px);
+            line-height: 30px; /* Matches the grid line spacing so text sits on the line */
+            padding: 30px 40px;
+            box-shadow: 5px 5px 20px rgba(0,0,0,0.2); /* Gives it depth */
+            font-family: 'Indie Flower', cursive; /* Handwriting font */
+            font-size: 1.6rem;
+            color: #333;
+            text-align: left;
+            position: relative;
+            transform: rotate(-1deg); /* Slight tilt to make it look real */
         }
 
-        .side-cat { width: 220px; height: auto; }
-        .dancing-kitty { margin-top: -90px; }
+        /* Timer specific styling to stand out slightly on the paper */
+        #timer {
+            font-weight: bold;
+            color: #db4e4e;
+            background-color: rgba(255, 255, 220, 0.8); /* Slight highlight behind numbers */
+            padding: 0 5px;
+            border-radius: 5px;
+        }
+
+        .side-cat { width: 180px; height: auto; }
+        .dancing-kitty { margin-top: -60px; }
 
         #proceed-btn { 
-            display: none; 
-            margin-top: 40px; 
-            background-color: #ff8da1; 
-            color: white; 
-            padding: 15px 40px; 
-            font-size: 1.6rem; 
-            cursor: pointer; 
-            border: none; 
-            border-radius: 12px; 
-            font-weight: bold;
+            display: none; margin-top: 40px; background-color: #ff8da1; color: white; 
+            padding: 15px 40px; font-size: 1.6rem; cursor: pointer; border: none; 
+            border-radius: 12px; font-weight: bold; font-family: sans-serif;
         }
 
-        @keyframes fadeIn { 
-            from { opacity: 0; transform: translateY(20px); } 
-            to { opacity: 1; transform: translateY(0); } 
-        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         
-        @media (max-width: 800px) {
-            #message-content { flex-direction: column; }
-            .side-cat { width: 150px; }
-            .intro-text { font-size: 1.4rem; order: -1; }
-            #envelope { width: 250px; }
+        @media (max-width: 900px) {
+            #message-content { flex-direction: column; gap: 20px; }
+            .side-cat { width: 120px; }
+            .letter-paper { width: 90%; font-size: 1.3rem; order: -1;}
+            .dancing-kitty { margin-top: 0; }
         }
     </style>
 </head>
@@ -127,26 +122,60 @@
 
         <div id="message-content">
             <img src="assets/images/cat_heart.gif" class="side-cat" alt="cat heart">
-            <div class="intro-text">
+            
+            <div class="letter-paper">
                 <p>
-                    From the moment we met, my world became brighter.<br>
-                    Every smile you share feels like a gift just for me.<br>
-                    You are my favorite person and my greatest adventure.<br>
-                    I am so lucky to have you by my side through everything.<br>
-                    Now, I have a very important question to ask you...
+                    Dearest Pookie,
+                    <br><br>
+                    Ever since we met on that January night, <span id="timer">Calculating...</span> ago, my world has been so much brighter.
+                    <br><br>
+                    I wanted to send you this little note to let you know how special you are to me.
+                    <br><br>
+                    Love always,
+                    <br>
+                    [BLAHHHHHHH]
                 </p>
             </div>
+
             <img src="assets/images/cat_dance.gif" class="side-cat dancing-kitty" alt="cat dance">
         </div>
 
-        <button id="proceed-btn" onclick="window.location.href='main.html'">Click me to proceed</button>
+        <button id="proceed-btn" onclick="window.location.href='main.html'">Click to Continue</button>
     </div>
 
     <script>
+        // 1. Reveal functionality
         function openLetter() {
             document.getElementById('envelope-container').style.display = 'none';
             document.getElementById('message-content').style.display = 'flex';
             document.getElementById('proceed-btn').style.display = 'block';
+            // Start the timer only after the letter is opened
+            setInterval(updateTimer, 1000);
+            updateTimer(); 
+        }
+
+        // 2. Timer Logic (Jan 10, 2026, 10:25 PM)
+        // NOTE: Ensure this date is correct. If it's in the future relative to now, it will show negative numbers.
+        // If you meant Jan 10, 2025 (past), change 2026 to 2025 below.
+        const startDate = new Date("January 10, 2026 22:25:00").getTime();
+
+        function updateTimer() {
+            const now = new Date().getTime();
+            const distance = now - startDate;
+
+            // Basic check to prevent weird negatives if testing before the date
+            if (distance < 0) {
+                 document.getElementById("timer").innerHTML = "a little while";
+                 return;
+            }
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById("timer").innerHTML = 
+                days + "d " + hours + "h " + minutes + "m " + seconds + "s";
         }
     </script>
 </body>
