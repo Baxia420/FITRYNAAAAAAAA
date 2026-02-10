@@ -5,6 +5,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>It's Official! ❤️</title>
     <link rel="stylesheet" href="styles.css">
+    <style>
+        /* This animation makes the button "beat" like a heart */
+        @keyframes subtle-pulse {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 141, 161, 0.7); }
+            70% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(255, 141, 161, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 141, 161, 0); }
+        }
+
+        .next-btn {
+            /* CENTER FIX: These two lines force the button to the middle */
+            display: block;
+            margin: 40px auto; 
+            
+            background-color: #ff8da1; 
+            color: white; 
+            padding: 15px 40px; 
+            border-radius: 50px; 
+            border: none; 
+            cursor: pointer; 
+            font-size: 1.4rem; 
+            font-weight: bold; 
+            font-family: 'Steph', sans-serif;
+            animation: subtle-pulse 2s infinite; 
+            transition: background-color 0.3s, transform 0.2s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .next-btn:hover {
+            background-color: #ff6b85;
+            animation: none; 
+            transform: scale(1.1);
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -18,5 +51,9 @@
             (Get ready for lots of dates (Eventually) and annoying amounts of love!)
         </div>
     </div>
+
+    <button class="next-btn" onclick="window.location.href='final-letter.html'">
+        There is more I want to say... ➜
+    </button>
 </body>
 </html>

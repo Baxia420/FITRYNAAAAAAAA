@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Story ♡</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap" rel="stylesheet">
+    <style>
+        body {
+            overflow-y: auto;
+            height: auto;
+            padding-bottom: 80px;
+        }
+
+        .main-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 95%;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        /* --- LAYOUT: Garfield Left, Letter Center --- */
+        .content-row {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: flex-start; 
+            width: 100%;
+            margin-top: 30px;
+            position: relative;
+        }
+
+        /* Garfield Container (Far Left) */
+        .garfield-container {
+            flex: 0 0 35%; 
+            display: flex;
+            justify-content: flex-start;
+            padding-left: 50px;
+        }
+        
+        #garfield-img {
+            width: 550px; /* Big Garfield sticker */
+            max-width: 100%;
+            height: auto;
+            filter: drop-shadow(10px 10px 20px rgba(0,0,0,0.15));
+        }
+
+        /* Letter Container (Centralized) */
+        .letter-container {
+            flex: 1;
+            display: flex;
+            justify-content: center; 
+            padding-right: 15%; 
+        }
+
+        .final-letter {
+            background-color: #fffef0;
+            background-image: repeating-linear-gradient(to bottom, transparent 0px, transparent 34px, #AFCBFF 35px);
+            line-height: 35px;
+            padding: 40px;
+            box-shadow: 10px 10px 30px rgba(0,0,0,0.1);
+            font-family: 'Indie Flower', cursive;
+            
+            /* Smaller text for a "semi-big" letter that fits more content */
+            font-size: 1.3rem; 
+            color: #333;
+            
+            max-width: 600px;
+            width: 100%;
+            border-radius: 5px;
+        }
+
+        /* --- OUR MOMENTS SECTION --- */
+        .moments-container {
+            margin-top: 80px;
+            text-align: center;
+            width: 100%;
+        }
+
+        #moment-text {
+            font-size: 2rem;
+            color: #db4e4e;
+            font-family: 'Indie Flower', cursive;
+            font-weight: bold;
+            margin-bottom: 30px;
+            min-height: 80px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            transition: opacity 0.3s ease;
+        }
+
+        /* Standard Pink Pulse Button */
+        @keyframes pulse-standard {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 141, 161, 0.7); }
+            70% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(255, 141, 161, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 141, 161, 0); }
+        }
+
+        .standard-pink-btn {
+            background-color: #ff8da1;
+            color: white;
+            padding: 15px 45px;
+            font-size: 1.3rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            font-family: 'Steph', sans-serif;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            animation: pulse-standard 2s infinite ease-in-out;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        .standard-pink-btn:hover {
+            background-color: #ff6b85;
+            transform: scale(1.1);
+            animation: none;
+        }
+
+        /* --- BOTTOM SECTION --- */
+        .next-section {
+            margin-top: 100px;
+            text-align: center;
+        }
+
+        .next-text {
+            font-size: 1.5rem;
+            color: #555;
+            margin-bottom: 25px;
+            font-weight: bold;
+        }
+
+        #coupon-btn {
+            background-color: #57915e; 
+            color: white;
+            padding: 15px 40px;
+            font-size: 1.4rem;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+        #coupon-btn:hover { transform: scale(1.05); }
+
+        /* Mobile Adjustments */
+        @media (max-width: 1100px) {
+            .content-row { flex-direction: column; align-items: center; }
+            .garfield-container, .letter-container { padding: 0; flex: none; width: 100%; justify-content: center; }
+            #garfield-img { width: 300px; margin-bottom: 30px; }
+            .letter-container { padding-right: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="main-wrapper">
+        
+        <div class="content-row">
+            <div class="garfield-container">
+                <img src="assets/images/garfield.gif" id="garfield-img" alt="Garfield">
+            </div>
+
+            <div class="letter-container">
+                <div class="final-letter">
+                    My Dearest Pookie,
+                    <br><br>
+                    You didn't think that was it, did you?
+                    <br><br>
+                    I just wanted to take a moment to look back on everything that's happened since that January night. It's been a bit of a whirlwind, but I wouldn't change a single second of it. 
+                    <br><br>
+                    From our 5 AM talks to our inside jokes about "bald" guys, every moment with you feels like a new favorite memory. I'm so lucky to have you as my partner, my debugger, and my best friend.
+                    <br><br>
+                    Thank you for being you, coco. I'm excited for all the moments we haven't even had yet.
+                    <br><br>
+                    Love always,
+                    <br>
+                    [Your Name]
+                </div>
+            </div>
+        </div>
+
+        <div class="moments-container">
+            <h2 style="color: #db4e4e; font-family: 'Steph', sans-serif; font-size: 2.2rem; margin-bottom: 15px;">
+                Our Best Moments SO Far
+            </h2>
+            <div id="moment-text">Click the button to relive a memory! ♡</div>
+            <button class="standard-pink-btn" onclick="nextMoment()">
+                Show me a memory!
+            </button>
+        </div>
+
+        <div class="next-section">
+            <div class="next-text">
+                ANNNND wait, there is more... <br>
+                I have a coupon book for you to use and redeem!
+            </div>
+            <button id="coupon-btn" onclick="window.location.href='coupons.html'">
+                Open Coupon Book →
+            </button>
+        </div>
+
+    </div>
+
+    <script>
+        // Integrated the moments from your chat history!
+        const moments = [
+            "Our 5 AM talks about nothing and everything.",
+            "That time you told me you were 'not really single' while waiting for me.",
+            "When you called me 'darling' for the first time.",
+            "Joking about me being a 'nasty boy' (we were so dramatic).",
+            "That study session when you first told me you love me.",
+            "When you call me 'sayang' even when you’re half-asleep.",
+            "Joking about our 'imaginary money' together.",
+            "Surviving that bike workshop drama side by side.",
+            "Your 😮 reactions to my messages just to be dramatic.",
+            "That John Cena theme song joke you sent me.",
+            "Our weird inside joke about 'bald' guys.",
+            "The way you look at my biceps and suddenly get 'motivated'.",
+            "When you teased me about my 26-hour Instagram reel addiction.",
+            "You staying up late just because you're a night owl for me.",
+            "The first time you sent me 'muah muah' when feeling affectionate.",
+            "Sharing family stories and hearing your family's honest thoughts.",
+            "Our shared love for 'shellout' seafood dates.",
+            "When you said I'm the only one who truly wants you."
+        ];
+
+        function nextMoment() {
+            const display = document.getElementById("moment-text");
+            display.style.opacity = 0;
+            setTimeout(() => {
+                const random = moments[Math.floor(Math.random() * moments.length)];
+                display.innerText = random;
+                display.style.opacity = 1;
+            }, 300);
+        }
+    </script>
+
+</body>
+</html>
