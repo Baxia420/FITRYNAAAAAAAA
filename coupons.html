@@ -7,397 +7,341 @@
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap" rel="stylesheet">
     <style>
-        body {
-            overflow-y: auto;
-            height: auto;
-            padding-bottom: 100px;
-        }
-
-        /* --- Header Section --- */
-        .coupons-header {
-            margin-top: 30px;
-            margin-bottom: 40px;
-            text-align: center;
+        body { 
+            height: 100vh; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center;
+            padding: 0; 
+            margin: 0;
+            overflow: hidden; 
         }
 
         .coupons-title {
-            font-family: 'Steph', sans-serif;
-            font-size: 2rem;
-            color: #db4e4e;
+            font-family: 'Steph', sans-serif; 
+            font-size: 1.8rem; 
+            color: #db4e4e; 
             font-weight: bold;
-            background: rgba(255, 255, 255, 0.8);
-            padding: 15px 35px;
+            background: rgba(255, 255, 255, 0.8); 
+            padding: 8px 30px; 
             border-radius: 25px;
-            display: inline-block;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            display: inline-block; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05); 
+            margin-bottom: 20px; 
+            z-index: 10;
         }
 
-        /* --- Coupons Container & Grid --- */
+        /* --- Grid Layout --- */
         .coupons-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 25px;
-            margin: 40px auto;
-            max-width: 1100px;
-            padding: 0 20px;
-            justify-items: center;
+            display: grid; 
+            grid-template-columns: repeat(6, 1fr); 
+            column-gap: 20px;
+            row-gap: 15px; 
+            width: 90%; 
+            max-width: 1000px; 
+            margin: 0 auto;
+            align-content: center;
         }
 
-        /* Individual Coupon Card */
-        .coupon-card {
-            perspective: 1000px;
-            width: 200px;
-            height: 280px;
-            cursor: pointer;
+        /* --- Ticket Structure --- */
+        .coupon-card { 
             position: relative;
-        }
-
-        .coupon-inner {
-            position: relative;
+            cursor: pointer; 
             width: 100%;
-            height: 100%;
-            transition: transform 0.72s cubic-bezier(0.22, 1, 0.36, 1);
-            transform-style: preserve-3d;
-            transform-origin: center;
-            will-change: transform;
-        }
-
-        .coupon-card {
-            perspective: 1400px;
-            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            max-width: 320px; 
+            margin: 0 auto;
+            transition: transform 0.2s ease;
+            
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            
+            background: transparent;
+            border: none;
+            box-shadow: none;
         }
 
         .coupon-card:hover {
-            transform: translateY(-8px);
-            z-index: 5;
+            transform: translateY(-5px);
         }
 
-        .coupon-card.flipped .coupon-inner {
-            transform: rotateY(180deg) translateZ(0);
-        }
-
-        /* Ticket emoji (front) styling */
-        .ticket-emoji {
-            position: relative;
-            width: 88px;
-            height: 56px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 8px;
-            font-size: 2.2rem;
-            box-shadow: 0 6px 14px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.25);
-            color: #fff;
-            margin-top: 8px;
-        }
-
-        /* decorative notches on left/right to look like a ticket */
-        .ticket-emoji::before,
-        .ticket-emoji::after {
-            content: "";
-            position: absolute;
-            width: 14px;
-            height: 20px;
-            background: transparent;
-            border-radius: 50%;
-            box-shadow: 0 0 0 8px rgba(255,255,255,0.02) inset;
-        }
-
-        .ticket-emoji::before { left: -8px; }
-        .ticket-emoji::after { right: -8px; }
-
-        .coupon-front, .coupon-back {
-            position: absolute;
+        /* The Image itself */
+        .coupon-bg-img {
             width: 100%;
-            height: 100%;
-            backface-visibility: hidden;
-            border-radius: 6px;
+            height: auto; 
+            display: block;
+            filter: drop-shadow(0 5px 10px rgba(0,0,0,0.15));
         }
 
-        /* ACTUAL COUPON STYLING */
-        .coupon-front {
-            background: white;
+        /* Text Below the Coupon */
+        .coupon-title-text { 
+            font-family: 'Steph', sans-serif; 
+            color: #db4e4e; 
+            font-size: 1.1rem; 
+            font-weight: bold; 
+            text-shadow: 1px 1px 0px rgba(255,255,255,0.4);
+            text-align: center;
+            line-height: 1.2;
+            margin-top: 5px; 
+            background: rgba(255,255,255,0.6);
+            padding: 2px 12px;
+            border-radius: 12px;
+        }
+
+        /* Grid Placement */
+        .coupon-card:nth-child(1), .coupon-card:nth-child(2) { grid-column: span 3; }
+        .coupon-card:nth-child(3), .coupon-card:nth-child(4), .coupon-card:nth-child(5) { grid-column: span 2; }
+
+
+        /* --- Tooltip Logic --- */
+        .coupon-tooltip {
+            display: none; 
+            position: absolute;
+            width: 250px;
+            background-color: #fffef0;
             border: 2px solid #db4e4e;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: space-between;
-            padding: 15px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            position: relative;
+            padding: 12px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            z-index: 100;
+            text-align: center;
+            animation: popIn 0.3s ease;
         }
 
-        /* Dashed tear line in middle */
-        .coupon-front::after {
+        /* Default Tooltip Position (Above) - For Bottom Row */
+        .coupon-tooltip {
+            bottom: 100%; 
+            left: 50%;
+            transform: translateX(-50%);
+            margin-bottom: 10px;
+        }
+        
+        /* Default Arrow (Pointing Down) */
+        .coupon-tooltip::after {
             content: "";
             position: absolute;
-            bottom: 100px;
-            left: 0;
-            width: 100%;
-            border-top: 2px dashed #db4e4e;
+            top: 100%;
+            left: 50%;
+            margin-left: -8px;
+            border-width: 8px;
+            border-style: solid;
+            border-color: #db4e4e transparent transparent transparent;
         }
 
-        .coupon-icon {
-            font-size: 2.5rem;
-            margin-top: 10px;
+        /* --- Custom Tooltip Positions for Top Row --- */
+
+        /* 1. Left Coupon (Index 0) -> Tooltip goes LEFT */
+        .coupon-card:nth-child(1) .coupon-tooltip {
+            right: 105%; 
+            left: auto;
+            bottom: auto;
+            top: 50%;
+            transform: translateY(-50%);
+            margin-right: 10px;
+            margin-bottom: 0;
+        }
+        /* Arrow pointing Right */
+        .coupon-card:nth-child(1) .coupon-tooltip::after {
+            top: 50%;
+            left: 100%; 
+            margin-top: -8px;
+            margin-left: 0;
+            border-color: transparent transparent transparent #db4e4e;
         }
 
-        .coupon-title {
+        /* 2. Right Coupon (Index 1) -> Tooltip goes RIGHT */
+        .coupon-card:nth-child(2) .coupon-tooltip {
+            left: 105%; 
+            right: auto;
+            bottom: auto;
+            top: 50%;
+            transform: translateY(-50%);
+            margin-left: 10px;
+            margin-bottom: 0;
+        }
+        /* Arrow pointing Left */
+        .coupon-card:nth-child(2) .coupon-tooltip::after {
+            top: 50%;
+            left: auto;
+            right: 100%; 
+            margin-top: -8px;
+            margin-left: 0;
+            border-color: transparent #db4e4e transparent transparent;
+        }
+
+        .coupon-card.active .coupon-tooltip {
+            display: block;
+        }
+
+        .tooltip-title {
             font-family: 'Steph', sans-serif;
-            font-size: 1rem;
-            font-weight: bold;
             color: #db4e4e;
-            text-align: center;
-            margin: 10px 0 0 0;
-        }
-
-        .coupon-footer {
-            font-family: 'Steph', sans-serif;
-            font-size: 0.9rem;
-            color: #666;
-            text-align: center;
-            font-style: italic;
-        }
-
-        /* Back of Coupon - Full Description */
-        .coupon-back {
-            background: linear-gradient(135deg, #db4e4e 0%, #ff6b85 100%);
-            border: 2px solid #c43b3b;
-            transform: rotateY(180deg);
-            display: flex;
-            flex-direction: column;
-            padding: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-            overflow-y: auto;
-        }
-
-        .coupon-back-title {
-            font-family: 'Steph', sans-serif;
-            font-size: 0.95rem;
             font-weight: bold;
-            color: white;
-            text-align: center;
-            margin-bottom: 10px;
+            font-size: 1rem;
+            margin-bottom: 5px;
+            display: block;
+            border-bottom: 1px dashed #db4e4e;
+            padding-bottom: 3px;
         }
 
-        .coupon-back-description {
+        .tooltip-desc {
             font-family: 'Indie Flower', cursive;
-            font-size: 0.85rem;
-            color: white;
-            text-align: center;
-            margin-bottom: 10px;
-            line-height: 1.4;
-        }
-
-        .coupon-back-uses {
-            font-family: 'Steph', sans-serif;
-            font-size: 0.8rem;
-            color: rgba(255, 255, 255, 0.9);
-            background: rgba(0, 0, 0, 0.2);
-            padding: 6px 10px;
-            border-radius: 4px;
-            text-align: center;
-            margin-top: auto;
-        }
-
-        /* --- Final Message Section (hidden by default) --- */
-        .final-message-section {
-            display: none;
-            text-align: center;
-            margin: 40px auto;
-            animation: fadeIn 1s ease;
-        }
-
-        .final-message {
-            font-family: 'Indie Flower', cursive;
-            font-size: 0.95rem;
             color: #333;
-            background: rgba(255, 255, 255, 0.85);
-            padding: 35px;
+            font-size: 0.95rem;
+            line-height: 1.3;
+            margin-bottom: 8px;
+        }
+
+        .tooltip-uses {
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: #57915e;
+            background: rgba(87, 145, 94, 0.1);
+            padding: 3px 8px;
             border-radius: 20px;
-            max-width: 700px;
-            margin: 0 auto 40px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            line-height: 1.7;
+            display: inline-block;
         }
 
-        .final-message p {
-            margin: 15px 0;
+        @keyframes popIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        /* --- Next Button (Fixed Bottom Right) --- */
+        .next-page-btn {
+            display: none; 
+            position: fixed; 
+            bottom: 30px;    
+            right: 30px;     
+            
+            background: #57915e; 
+            color: white; 
+            padding: 15px 35px; 
+            border-radius: 50px;
+            font-family: 'Steph', sans-serif; 
+            font-size: 1.2rem; 
+            font-weight: bold; 
+            border: none; 
+            cursor: pointer;
+            z-index: 1000; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            transition: transform 0.2s; 
+            animation: fadeIn 0.5s ease;
         }
+        .next-page-btn:hover { transform: scale(1.1); background: #4a7a4d; }
 
-        /* Responsive */
-        @media (max-width: 900px) {
-            .coupons-container {
-                grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-                gap: 20px;
-            }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-            .coupon-card {
-                width: 180px;
-                height: 260px;
+        @media (max-width: 800px) {
+            body { overflow-y: auto; height: auto; padding: 20px 0;}
+            .coupons-container { grid-template-columns: 1fr; row-gap: 30px;}
+            .coupon-card { grid-column: span 1 !important; max-width: 280px; }
+            
+            /* Reset tooltips for mobile */
+            .coupon-card:nth-child(1) .coupon-tooltip,
+            .coupon-card:nth-child(2) .coupon-tooltip {
+                left: 50%; right: auto; top: auto; bottom: 100%;
+                transform: translateX(-50%); margin: 0 0 10px 0;
             }
-
-            .final-message {
-                padding: 25px;
-                font-size: 0.9rem;
+            .coupon-card:nth-child(1) .coupon-tooltip::after,
+            .coupon-card:nth-child(2) .coupon-tooltip::after {
+                top: 100%; left: 50%; right: auto; margin-top: 0; margin-left: -8px;
+                border-color: #db4e4e transparent transparent transparent; 
             }
-        }
-
-        @media (max-width: 600px) {
-            .coupons-title {
-                font-size: 1.5rem;
-            }
-
-            .coupons-container {
-                grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-                gap: 15px;
-            }
-
-            .coupon-card {
-                width: 160px;
-                height: 240px;
-            }
-
-            .coupon-title {
-                font-size: 0.9rem;
-            }
-
-            .final-message {
-                padding: 20px;
-                font-size: 0.85rem;
-            }
-
-            .message-form {
-                padding: 20px;
-            }
+            
+            .next-page-btn { position: static; margin: 30px auto; display: block; }
         }
     </style>
 </head>
 <body>
 
-    <div class="coupons-header">
-        <div class="coupons-title">Your Special Gift Coupons 🎟️</div>
-    </div>
+    <div class="coupons-title">Your Special Gift Coupons 🎟️</div>
 
-    <div class="coupons-container" id="coupons-grid">
-        <!-- Coupons will be generated here -->
-    </div>
+    <div class="coupons-container" id="coupons-grid"></div>
 
-    <!-- Final Message (shown after all coupons clicked) -->
-    <div class="final-message-section" id="final-message-section">
-        <div class="final-message">
-            <p>
-                That is all i had in store for you today. I am sorry if it isn't to your liking. I am not really good at coding and this was my first real project so, mistakes were obviously made. I hope you liked it tho, took a lot more time than i am comfortable saying in public. If anyone asks, say i finished this shit in 2 hours (More like 20 hours but I cannot look bad in front of other people, only you)
-            </p>
-
-            <p>
-                Also, this website actually does not allow you to say No, I designed it in such a way. Although, i do not want you to feel pressured or anything. If you want to say no, you can say no, the option is open. I have never been one to force something on anyone and I dont intend to change that now.
-            </p>
-
-            <p>
-                And, thats it, I honestly do not know what else to say, never did anything like this, being transparent with my feelings and all. I wanted to get you flowers today, found a facebook page and everything but you are going back home and taking those flowers back home......yea...I would not want you to get into trouble. Realistically tho, you are gonna get into alot of trouble for dating me, and for that, I am sorry. If you change your mind, I will not fight it.
-            </p>
-        </div>
-    </div>
+    <button id="next-btn" class="next-page-btn" onclick="window.location.href='final-message.html'">
+        I have one last thing to say... ➜
+    </button>
 
     <script>
         const coupons = [
-            {
-                title: "Get Out of an Argument",
-                icon: "🛑",
-                color: "#db4e4e",
+            { 
+                title: "\"Get Out of an Argument\" Coupon", 
                 description: "Can be used to immediately end a minor disagreement and move on without further discussion.",
                 uses: "2"
             },
-            {
-                title: "Hugs Hugs Hugs",
-                icon: "🤗",
-                color: "#ffb6c1",
+            { 
+                title: "\"Hugs Hugs Hugs\" Coupon", 
                 description: "A hug, for you, anytime, anywhere, any moment.",
                 uses: "Unlimited"
             },
-            {
-                title: "Ask me Anything",
-                icon: "❓",
-                color: "#c43b3b",
+            { 
+                title: "\"Ask me anything\" Coupon", 
                 description: "You get to ask me a question, ANY QUESTION. I will have to answer completely honestly.",
                 uses: "2"
             },
-            {
-                title: "Can we eat?",
-                icon: "🍽️",
-                color: "#ff8da1",
-                description: "We eat whatever you feel like, wherever you want, whatever the price (within my wallet lol). And I don't get to say no!",
+            { 
+                title: "\"Can we eat?\" Coupon", 
+                description: "We eat whatever you feel like eating, whereever it is, and whatever the price (Assuming its within whatever I have in my wallet lol, you know i am a brokie rn) And i do not get to say no (I am a picky eater, so this voucher might come in handly some day)",
                 uses: "2"
             },
-            {
-                title: "Get out of Jail",
-                icon: "💚",
-                color: "#57915e",
-                description: "Made me angry? Use this to instantly make me okay again. Silly mistakes only! (No high-level crimes against my feelings)",
+            { 
+                title: "\"Get out of jail\" Coupon", 
+                description: "Made me angry/upset for whatever reason? Use this voucher to instantly make me okay again.<br><br><strong>NOTE:</strong> Does not cover high-level crimes against my feelings. Silly mistakes only!",
                 uses: "1"
             }
         ];
 
-        let clickedCoupons = new Set();
+        const clickedIndices = new Set();
 
         function initCoupons() {
             const grid = document.getElementById('coupons-grid');
+            
             coupons.forEach((coupon, index) => {
                 const card = document.createElement('div');
                 card.className = 'coupon-card';
-                card.id = `coupon-${index}`;
+                
                 card.innerHTML = `
-                    <div class="coupon-inner">
-                        <div class="coupon-front">
-                            <div class="ticket-emoji" style="background: linear-gradient(135deg, ${coupon.color} 0%, rgba(0,0,0,0.05) 100%);">
-                                🎟️
-                            </div>
-                            <div class="coupon-title">${coupon.title}</div>
-                            <div class="coupon-footer">Click to reveal</div>
-                        </div>
-                        <div class="coupon-back">
-                            <div class="coupon-back-title">${coupon.title}</div>
-                            <div class="coupon-back-description">${coupon.description}</div>
-                            <div class="coupon-back-uses">Uses: ${coupon.uses}</div>
-                        </div>
+                    <div class="coupon-tooltip">
+                        <span class="tooltip-title">${coupon.title}</span>
+                        <div class="tooltip-desc">${coupon.description}</div>
+                        <div class="tooltip-uses">Uses: ${coupon.uses}</div>
                     </div>
+                    
+                    <img src="assets/images/ticket.png" class="coupon-bg-img" alt="ticket">
+                    
+                    <div class="coupon-title-text">${coupon.title}</div>
                 `;
-                card.addEventListener('click', () => toggleCoupon(index, card));
+
+                card.onclick = (e) => {
+                    e.stopPropagation(); 
+                    
+                    document.querySelectorAll('.coupon-card').forEach(c => {
+                        if (c !== card) c.classList.remove('active');
+                    });
+
+                    card.classList.toggle('active');
+
+                    if (!clickedIndices.has(index)) {
+                        clickedIndices.add(index);
+                        if (clickedIndices.size === coupons.length) {
+                            document.getElementById('next-btn').style.display = 'block';
+                        }
+                    }
+                };
+
                 grid.appendChild(card);
             });
         }
 
-        function toggleCoupon(index, card) {
-            card.classList.toggle('flipped');
-            
-            if (card.classList.contains('flipped')) {
-                clickedCoupons.add(index);
-            } else {
-                clickedCoupons.delete(index);
-            }
+        document.body.onclick = () => {
+            document.querySelectorAll('.coupon-card').forEach(c => {
+                c.classList.remove('active');
+            });
+        };
 
-            checkAllClicked();
-        }
-
-        function checkAllClicked() {
-            if (clickedCoupons.size === coupons.length) {
-                setTimeout(() => {
-                    document.getElementById('coupons-grid').style.display = 'none';
-                    document.getElementById('final-message-section').style.display = 'block';
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                }, 500);
-            }
-        }
-
-        // Initialize on load
         initCoupons();
     </script>
-
 </body>
 </html>
