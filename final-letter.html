@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Our Story ♡</title>
+    <title>A Letter For You ♡</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap" rel="stylesheet">
     <style>
@@ -42,7 +42,7 @@
         }
         
         #garfield-img {
-            width: 550px; /* Big Garfield sticker */
+            width: 550px; 
             max-width: 100%;
             height: auto;
             filter: drop-shadow(10px 10px 20px rgba(0,0,0,0.15));
@@ -63,90 +63,38 @@
             padding: 40px;
             box-shadow: 10px 10px 30px rgba(0,0,0,0.1);
             font-family: 'Indie Flower', cursive;
-            
-            /* Smaller text for a "semi-big" letter that fits more content */
             font-size: 1.3rem; 
             color: #333;
-            
             max-width: 600px;
             width: 100%;
             border-radius: 5px;
+            text-align: left;
         }
 
-        /* --- OUR MOMENTS SECTION --- */
-        .moments-container {
-            margin-top: 80px;
+        /* Navigation Button Styling */
+        .nav-section {
+            margin-top: 60px;
             text-align: center;
-            width: 100%;
         }
 
-        #moment-text {
-            font-size: 2rem;
-            color: #db4e4e;
-            font-family: 'Indie Flower', cursive;
-            font-weight: bold;
-            margin-bottom: 30px;
-            min-height: 80px;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
-            transition: opacity 0.3s ease;
-        }
-
-        /* Standard Pink Pulse Button */
-        @keyframes pulse-standard {
-            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 141, 161, 0.7); }
-            70% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(255, 141, 161, 0); }
-            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 141, 161, 0); }
-        }
-
-        .standard-pink-btn {
+        .moments-btn {
             background-color: #ff8da1;
             color: white;
-            padding: 15px 45px;
-            font-size: 1.3rem;
+            padding: 18px 45px;
+            font-size: 1.5rem;
             border: none;
             border-radius: 50px;
             cursor: pointer;
             font-weight: bold;
             font-family: 'Steph', sans-serif;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            animation: pulse-standard 2s infinite ease-in-out;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
             transition: background-color 0.3s, transform 0.2s;
         }
 
-        .standard-pink-btn:hover {
+        .moments-btn:hover {
             background-color: #ff6b85;
-            transform: scale(1.1);
-            animation: none;
+            transform: scale(1.05);
         }
-
-        /* --- BOTTOM SECTION --- */
-        .next-section {
-            margin-top: 100px;
-            text-align: center;
-        }
-
-        .next-text {
-            font-size: 1.5rem;
-            color: #555;
-            margin-bottom: 25px;
-            font-weight: bold;
-        }
-
-        #coupon-btn {
-            background-color: #57915e; 
-            color: white;
-            padding: 15px 40px;
-            font-size: 1.4rem;
-            border: none;
-            border-radius: 12px;
-            cursor: pointer;
-            font-weight: bold;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            transition: transform 0.2s;
-        }
-        #coupon-btn:hover { transform: scale(1.05); }
 
         /* Mobile Adjustments */
         @media (max-width: 1100px) {
@@ -168,78 +116,31 @@
 
             <div class="letter-container">
                 <div class="final-letter">
-                    My Dearest Pookie,
-                    <br><br>
-                    You didn't think that was it, did you?
-                    <br><br>
-                    I just wanted to take a moment to look back on everything that's happened since that January night. It's been a bit of a whirlwind, but I wouldn't change a single second of it. 
-                    <br><br>
-                    From our 5 AM talks to our inside jokes about "bald" guys, every moment with you feels like a new favorite memory. I'm so lucky to have you as my partner, my debugger, and my best friend.
-                    <br><br>
-                    Thank you for being you, coco. I'm excited for all the moments we haven't even had yet.
-                    <br><br>
-                    Love always,
-                    <br>
-                    [Your Name]
+                    <p>Dear [Name],</p>
+                    
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                    </p>
+
+                    <p>
+                        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                    </p>
+
+                    <p>
+                        Yours forever,<br>
+                        [Your Name]
+                    </p>
                 </div>
             </div>
         </div>
 
-        <div class="moments-container">
-            <h2 style="color: #db4e4e; font-family: 'Steph', sans-serif; font-size: 2.2rem; margin-bottom: 15px;">
-                Our Best Moments SO Far
-            </h2>
-            <div id="moment-text">Click the button to relive a memory! ♡</div>
-            <button class="standard-pink-btn" onclick="nextMoment()">
-                Show me a memory!
-            </button>
-        </div>
-
-        <div class="next-section">
-            <div class="next-text">
-                ANNNND wait, there is more... <br>
-                I have a coupon book for you to use and redeem!
-            </div>
-            <button id="coupon-btn" onclick="window.location.href='coupons.html'">
-                Open Coupon Book →
+        <div class="nav-section">
+            <button class="moments-btn" onclick="window.location.href='moments.html'">
+                Some of our best moments SO far. ➜
             </button>
         </div>
 
     </div>
-
-    <script>
-        // Integrated the moments from your chat history!
-        const moments = [
-            "Our 5 AM talks about nothing and everything.",
-            "That time you told me you were 'not really single' while waiting for me.",
-            "When you called me 'darling' for the first time.",
-            "Joking about me being a 'nasty boy' (we were so dramatic).",
-            "That study session when you first told me you love me.",
-            "When you call me 'sayang' even when you’re half-asleep.",
-            "Joking about our 'imaginary money' together.",
-            "Surviving that bike workshop drama side by side.",
-            "Your 😮 reactions to my messages just to be dramatic.",
-            "That John Cena theme song joke you sent me.",
-            "Our weird inside joke about 'bald' guys.",
-            "The way you look at my biceps and suddenly get 'motivated'.",
-            "When you teased me about my 26-hour Instagram reel addiction.",
-            "You staying up late just because you're a night owl for me.",
-            "The first time you sent me 'muah muah' when feeling affectionate.",
-            "Sharing family stories and hearing your family's honest thoughts.",
-            "Our shared love for 'shellout' seafood dates.",
-            "When you said I'm the only one who truly wants you."
-        ];
-
-        function nextMoment() {
-            const display = document.getElementById("moment-text");
-            display.style.opacity = 0;
-            setTimeout(() => {
-                const random = moments[Math.floor(Math.random() * moments.length)];
-                display.innerText = random;
-                display.style.opacity = 1;
-            }, 300);
-        }
-    </script>
 
 </body>
 </html>

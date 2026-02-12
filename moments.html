@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Mystery Moments ♡</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap" rel="stylesheet">
+    <style>
+        body {
+            /* Increase padding to ensure the bottom button is never cut off */
+            overflow-y: auto;
+            height: auto;
+            padding-bottom: 120px; 
+        }
+
+        /* --- Header Section --- */
+        .intro-section {
+            margin-top: 40px;
+            margin-bottom: 20px;
+        }
+
+        .intro-text {
+            font-family: 'Steph', sans-serif;
+            font-size: 1.3rem;
+            color: #db4e4e;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 15px 30px;
+            border-radius: 25px;
+            display: inline-block;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            /* Keep it bold and prominent */
+            font-weight: bold; 
+        }
+
+        /* --- Mystery Boxes Container --- */
+        .boxes-container {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: flex-end; /* Align to bottom so boxes stay level as letters grow */
+            gap: 50px;
+            margin: 100px auto 60px auto;
+            max-width: 1200px;
+            perspective: 1000px;
+            min-height: 400px; /* Give space for the letters to pop up */
+            transition: opacity 1s ease, transform 1s ease;
+        }
+
+        .box-wrapper {
+            position: relative;
+            width: 220px;
+            height: 160px; /* Just the body height */
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .box-wrapper:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Striped Box Body */
+        .box-body {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(45deg, #ff8da1, #ff8da1 15px, #ffb6c1 15px, #ffb6c1 30px);
+            border-radius: 0 0 10px 10px;
+            box-shadow: inset 0 -10px 20px rgba(0,0,0,0.1), 5px 15px 30px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1;
+            border: 2px solid #db4e4e;
+        }
+
+        /* Box Lid - Animation updated to disappear */
+        .box-lid {
+            position: absolute;
+            top: -30px; /* Sits on top of the body */
+            width: 230px;
+            height: 45px;
+            left: -5px;
+            background-color: #db4e4e;
+            border-radius: 8px;
+            z-index: 4;
+            transition: transform 0.8s cubic-bezier(0.5, -0.5, 0.1, 1.5), opacity 0.5s ease;
+            transform-origin: center;
+            box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+            border: 1px solid #fff;
+        }
+
+        .box-lid::after {
+            content: "🎀";
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1.8rem;
+        }
+
+        /* Auto-sizing Revealed Note */
+        .box-message {
+            position: absolute;
+            bottom: 20px;
+            left: 5%;
+            width: 90%;
+            height: auto; /* Allow different sizes */
+            min-height: 140px;
+            background-color: #fffef0;
+            padding: 20px 15px;
+            font-family: 'Indie Flower', cursive;
+            font-size: 1.1rem;
+            color: #333;
+            border-radius: 5px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center; 
+            justify-content: center;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(0) scale(0.5);
+            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 2;
+            border-left: 3px solid #db4e4e;
+            line-height: 1.5;
+            pointer-events: none; /* Prevents clicks on the text from blocking box toggle */
+        }
+
+        /* --- Opening Animation --- */
+        .box-wrapper.open .box-lid {
+            transform: translateY(-250px) rotate(-15deg) scale(0.7); /* Lid flies up */
+            opacity: 0; /* Lid disappears */
+        }
+
+        .box-wrapper.open .box-message {
+            opacity: 1;
+            transform: translateY(-100%) scale(1.1); /* Pop up above the box */
+            z-index: 3;
+        }
+
+        /* Reshuffle Styling */
+        .reshuffle-container {
+            margin: 20px 0;
+        }
+
+        #reshuffle-btn {
+            background-color: #db4e4e;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-family: 'Steph', sans-serif;
+            font-size: 1.1rem;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+
+        #reshuffle-btn:hover:not(:disabled) {
+            transform: scale(1.05);
+            background-color: #ff6b85;
+        }
+
+        #reshuffle-btn:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        .counter-text {
+            margin-top: 10px;
+            font-size: 1.1rem;
+            color: #777;
+            font-weight: bold;
+            font-family: 'Steph', sans-serif;
+        }
+
+        /* Final Message */
+        .final-message {
+            font-family: 'Steph', sans-serif;
+            font-size: 1.8rem;
+            color: #db4e4e;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 40px;
+            border-radius: 30px;
+            max-width: 600px;
+            margin: 40px auto;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        /* Bottom Nav Fix */
+        .bottom-nav {
+            margin-top: 60px;
+            display: flex;
+            justify-content: center;
+            padding-bottom: 40px; /* Extra buffer */
+        }
+
+        .gift-btn {
+            background-color: #57915e;
+            color: white;
+            padding: 18px 45px;
+            font-size: 1.5rem;
+            border-radius: 50px;
+            font-family: 'Steph', sans-serif;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            border: none;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .gift-btn:hover { transform: scale(1.05); }
+
+        @keyframes boxFadeOut {
+            from { opacity: 1; transform: translateY(0); }
+            to { opacity: 0; transform: translateY(-50px); }
+        }
+
+        @media (max-width: 850px) {
+            .boxes-container { flex-direction: column; gap: 150px; align-items: center; margin-top: 50px; }
+            .box-wrapper.open .box-message { transform: translateY(-110%) scale(1); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="intro-section">
+        <div class="intro-text">
+            Some of our best moments are inside these boxes, Open them to see whats inside ♡
+        </div>
+    </div>
+
+    <div class="boxes-container" id="boxes-grid">
+        </div>
+
+    <div class="reshuffle-container">
+        <button id="reshuffle-btn" onclick="handleReshuffle()">Reshuffle Boxes ↻</button>
+        <div class="counter-text" id="counter">Reshuffles left: 5</div>
+    </div>
+
+    <div class="bottom-nav">
+        <button class="gift-btn" onclick="window.location.href='coupons.html'">
+            I have a small gift for you 😉
+        </button>
+    </div>
+
+    <script>
+        const memories = [
+            "The moment you admitted you’re single… but not really, because you were already emotionally my girlfriend, and also waiting for me to finish this project but you didn't know that at the time",
+            "Abang = brother Kakak = sister Adik = younger than abang and kakak, Fitryna = my sayang 💜 Not sure if you remember this moment or not LOL",
+            "You, and your healthy obsession with my biceps.",
+            "You told me how you feel about your body, how you’re insecure about certain things, and I could feel your trust in me growing. It made me want to hold you even closer.",
+            "You opened up about how your family views foreign relationships, and how they would want you to marry someone local. It made me realize just how hard this would be for both of us.",
+            "When you said that bangladeshi men are dangerous and may have a wife back in bangladesh, as if i would have another wife but you 😂😂😂",
+            "I told you that I wouldn’t let family drama be the reason we couldn’t try. We’d cross that bridge together. It felt like a promise to always fight for us.",
+            "Hearing you say that you were waiting (multiple times actually) for me, it wasn’t just casual. It felt like you were emotionally investing in this, in us. Basically giving me the green signal to ask you out",
+            "When you told me about your struggles with English, you didn't like speaking it, but you wished you could so that you could talk to me every second. That- I wanted to ask you to be mine at that exact second, it took a lot of restraint. I am sorry for making you wait.",
+            "That moment when you said you were afraid things wouldn’t work because of our families, I wanted to hold you tight. I wanted you to know we could face it together.",
+            "You opened up about your fear of not being good enough, not pretty enough, not slim enough and I reassured you that I was already here, already choosing you, only because its you.",
+            "You asking for post workout pictures of me, because you want to see me all sweaty and naked (You pervert! I love it tho)"
+        ];
+
+        let reshufflesLeft = 5;
+
+        function handleReshuffle() {
+            if (reshufflesLeft <= 0) return;
+
+            reshufflesLeft--;
+            document.getElementById('counter').innerText = `Reshuffles left: ${reshufflesLeft}`;
+            
+            const grid = document.getElementById('boxes-grid');
+
+            if (reshufflesLeft === 0) {
+                document.getElementById('reshuffle-btn').disabled = true;
+                grid.style.animation = "boxFadeOut 1s forwards";
+                setTimeout(() => {
+                    grid.innerHTML = '<div class="final-message">That is all the moments i could think off for now, Do not worry, we will be making more</div>';
+                    grid.style.opacity = 1;
+                }, 1000);
+                return;
+            }
+
+            reshuffleContent();
+        }
+
+        function reshuffleContent() {
+            const grid = document.getElementById('boxes-grid');
+            grid.innerHTML = ''; 
+
+            const shuffled = [...memories].sort(() => 0.5 - Math.random());
+            const selected = shuffled.slice(0, 3);
+
+            selected.forEach((memory) => {
+                const wrapper = document.createElement('div');
+                wrapper.className = 'box-wrapper';
+                wrapper.onclick = () => wrapper.classList.toggle('open');
+                
+                wrapper.innerHTML = `
+                    <div class="box-lid"></div>
+                    <div class="box-message">${memory}</div>
+                    <div class="box-body">
+                        <span style="font-size: 3rem; color: white; text-shadow: 2px 2px 5px rgba(0,0,0,0.3);">?</span>
+                    </div>
+                `;
+                grid.appendChild(wrapper);
+            });
+        }
+
+        reshuffleContent();
+    </script>
+
+</body>
+</html>
