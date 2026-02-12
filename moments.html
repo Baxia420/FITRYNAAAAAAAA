@@ -8,13 +8,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap" rel="stylesheet">
     <style>
         body {
-            /* Increase padding to ensure the bottom button is never cut off */
             overflow-y: auto;
             height: auto;
-            padding-bottom: 120px; 
+            padding-bottom: 120px;
         }
 
-        /* --- Header Section --- */
+        /* --- Updated Header --- */
         .intro-section {
             margin-top: 40px;
             margin-bottom: 20px;
@@ -29,85 +28,88 @@
             border-radius: 25px;
             display: inline-block;
             box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-            /* Keep it bold and prominent */
+            /* Bolded as requested */
             font-weight: bold; 
         }
 
-        /* --- Mystery Boxes Container --- */
+        /* --- 3D Striped Mystery Boxes --- */
         .boxes-container {
             display: flex;
             flex-direction: row;
             justify-content: center;
-            align-items: flex-end; /* Align to bottom so boxes stay level as letters grow */
+            align-items: center;
             gap: 50px;
-            margin: 100px auto 60px auto;
+            margin: 80px auto;
             max-width: 1200px;
             perspective: 1000px;
-            min-height: 400px; /* Give space for the letters to pop up */
+            min-height: 300px;
             transition: opacity 1s ease, transform 1s ease;
         }
 
         .box-wrapper {
             position: relative;
             width: 220px;
-            height: 160px; /* Just the body height */
+            height: 220px;
             cursor: pointer;
             transition: transform 0.3s ease;
+            filter: drop-shadow(0 4px 15px rgba(0,0,0,0.15));
         }
         
         .box-wrapper:hover {
-            transform: translateY(-5px);
+            transform: translateY(-15px);
+            filter: drop-shadow(0 10px 25px rgba(0,0,0,0.25));
         }
 
-        /* Striped Box Body */
+        /* Box Body with Stripes */
         .box-body {
             position: absolute;
             bottom: 0;
             width: 100%;
-            height: 100%;
+            height: 160px;
             background: repeating-linear-gradient(45deg, #ff8da1, #ff8da1 15px, #ffb6c1 15px, #ffb6c1 30px);
-            border-radius: 0 0 10px 10px;
-            box-shadow: inset 0 -10px 20px rgba(0,0,0,0.1), 5px 15px 30px rgba(0,0,0,0.2);
+            border-radius: 0 0 15px 15px;
+            box-shadow: inset 0 -10px 20px rgba(0,0,0,0.15), 5px 15px 35px rgba(0,0,0,0.3), inset 0 2px 5px rgba(255,255,255,0.3);
             display: flex;
             align-items: center;
             justify-content: center;
             z-index: 1;
-            border: 2px solid #db4e4e;
+            border: 3px solid #db4e4e;
+            border-top: none;
         }
 
-        /* Box Lid - Animation updated to disappear */
+        /* Box Lid */
         .box-lid {
             position: absolute;
-            top: -30px; /* Sits on top of the body */
+            top: 20px;
             width: 230px;
             height: 45px;
             left: -5px;
-            background-color: #db4e4e;
-            border-radius: 8px;
-            z-index: 4;
-            transition: transform 0.8s cubic-bezier(0.5, -0.5, 0.1, 1.5), opacity 0.5s ease;
-            transform-origin: center;
-            box-shadow: 0 8px 15px rgba(0,0,0,0.2);
-            border: 1px solid #fff;
+            background: linear-gradient(135deg, #ff6b85 0%, #db4e4e 50%, #c43b3b 100%);
+            border-radius: 10px;
+            z-index: 3;
+            transition: transform 0.7s cubic-bezier(0.68, -0.55, 0.27, 1.55), opacity 0.7s ease, box-shadow 0.7s ease;
+            transform-origin: top;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.25), inset 0 1px 3px rgba(255,255,255,0.3);
+            border: 2px solid #c43b3b;
         }
 
         .box-lid::after {
             content: "🎀";
             position: absolute;
-            top: -25px;
+            top: -30px;
             left: 50%;
             transform: translateX(-50%);
-            font-size: 1.8rem;
+            font-size: 2.2rem;
+            filter: drop-shadow(0 2px 5px rgba(0,0,0,0.15));
         }
 
-        /* Auto-sizing Revealed Note */
+        /* Improved Revealed Note */
         .box-message {
             position: absolute;
-            bottom: 20px;
+            bottom: 15px;
             left: 5%;
             width: 90%;
-            height: auto; /* Allow different sizes */
-            min-height: 140px;
+            max-height: 350px;
             background-color: #fffef0;
             padding: 20px 15px;
             font-family: 'Indie Flower', cursive;
@@ -120,24 +122,24 @@
             justify-content: center;
             text-align: center;
             opacity: 0;
-            transform: translateY(0) scale(0.5);
-            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform: translateY(20px) scale(0.8);
+            transition: all 0.5s ease;
             z-index: 2;
-            border-left: 3px solid #db4e4e;
-            line-height: 1.5;
-            pointer-events: none; /* Prevents clicks on the text from blocking box toggle */
+            overflow-y: auto; /* Scroll if text is too long */
+            border-left: 5px solid #db4e4e;
+            line-height: 1.6;
         }
 
-        /* --- Opening Animation --- */
+        /* Opened Animation */
         .box-wrapper.open .box-lid {
-            transform: translateY(-250px) rotate(-15deg) scale(0.7); /* Lid flies up */
-            opacity: 0; /* Lid disappears */
+            transform: translateY(-150px) rotateX(70deg) scale(0.8);
+            opacity: 0;
+            pointer-events: none;
         }
 
         .box-wrapper.open .box-message {
             opacity: 1;
-            transform: translateY(-100%) scale(1.1); /* Pop up above the box */
-            z-index: 3;
+            transform: translateY(-50px) scale(1.1);
         }
 
         /* Reshuffle Styling */
@@ -146,37 +148,44 @@
         }
 
         #reshuffle-btn {
-            background-color: #db4e4e;
+            background: linear-gradient(135deg, #db4e4e 0%, #ff6b85 50%, #ff8da1 100%);
             color: white;
-            padding: 12px 30px;
+            padding: 14px 35px;
             border-radius: 50px;
             font-family: 'Steph', sans-serif;
             font-size: 1.1rem;
             cursor: pointer;
-            border: none;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            border: 2px solid rgba(255,255,255,0.3);
+            box-shadow: 0 4px 15px rgba(219, 78, 78, 0.3), inset 0 1px 3px rgba(255,255,255,0.2);
             transition: all 0.3s;
         }
 
         #reshuffle-btn:hover:not(:disabled) {
-            transform: scale(1.05);
-            background-color: #ff6b85;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(219, 78, 78, 0.5), inset 0 1px 3px rgba(255,255,255,0.2);
         }
 
         #reshuffle-btn:disabled {
-            background-color: #ccc;
+            background: linear-gradient(135deg, #ccc 0%, #ddd 50%, #eee 100%);
             cursor: not-allowed;
+            opacity: 0.6;
         }
 
         .counter-text {
             margin-top: 10px;
             font-size: 1.1rem;
-            color: #777;
+            color: #fff;
             font-weight: bold;
             font-family: 'Steph', sans-serif;
+            background: rgba(219, 78, 78, 0.85);
+            padding: 10px 25px;
+            border-radius: 50px;
+            display: inline-block;
+            box-shadow: 0 4px 10px rgba(219, 78, 78, 0.4);
+            backdrop-filter: blur(4px);
         }
 
-        /* Final Message */
+        /* Final Message Style */
         .final-message {
             font-family: 'Steph', sans-serif;
             font-size: 1.8rem;
@@ -187,40 +196,53 @@
             max-width: 600px;
             margin: 40px auto;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            animation: fadeIn 1.5s forwards;
         }
 
-        /* Bottom Nav Fix */
+        /* Bottom Nav Button */
         .bottom-nav {
             margin-top: 60px;
             display: flex;
             justify-content: center;
-            padding-bottom: 40px; /* Extra buffer */
+            margin-bottom: 40px;
         }
 
         .gift-btn {
-            background-color: #57915e;
+            background: linear-gradient(135deg, #57915e 0%, #4a7a4d 50%, #3d6341 100%);
             color: white;
-            padding: 18px 45px;
+            padding: 20px 55px;
             font-size: 1.5rem;
             border-radius: 50px;
             font-family: 'Steph', sans-serif;
             font-weight: bold;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            border: none;
+            box-shadow: 0 8px 25px rgba(87, 145, 94, 0.4), inset 0 1px 3px rgba(255,255,255,0.2);
+            border: 2px solid rgba(255,255,255,0.3);
             cursor: pointer;
-            transition: transform 0.2s;
+            transition: all 0.3s ease;
         }
 
-        .gift-btn:hover { transform: scale(1.05); }
+        .gift-btn:hover { 
+            transform: scale(1.08);
+            box-shadow: 0 12px 35px rgba(87, 145, 94, 0.6), inset 0 1px 3px rgba(255,255,255,0.2);
+        }
+
+        .gift-btn:active {
+            transform: scale(0.98);
+        }
 
         @keyframes boxFadeOut {
             from { opacity: 1; transform: translateY(0); }
             to { opacity: 0; transform: translateY(-50px); }
         }
 
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
         @media (max-width: 850px) {
-            .boxes-container { flex-direction: column; gap: 150px; align-items: center; margin-top: 50px; }
-            .box-wrapper.open .box-message { transform: translateY(-110%) scale(1); }
+            .boxes-container { flex-direction: column; gap: 110px; }
+            .box-wrapper.open .box-message { transform: translateY(-60px) scale(1); }
         }
     </style>
 </head>
@@ -274,10 +296,11 @@
 
             if (reshufflesLeft === 0) {
                 document.getElementById('reshuffle-btn').disabled = true;
+                // Start Fade Out Animation
                 grid.style.animation = "boxFadeOut 1s forwards";
                 setTimeout(() => {
                     grid.innerHTML = '<div class="final-message">That is all the moments i could think off for now, Do not worry, we will be making more</div>';
-                    grid.style.opacity = 1;
+                    grid.style.animation = "fadeIn 1s forwards";
                 }, 1000);
                 return;
             }
@@ -292,10 +315,13 @@
             const shuffled = [...memories].sort(() => 0.5 - Math.random());
             const selected = shuffled.slice(0, 3);
 
-            selected.forEach((memory) => {
+            selected.forEach((memory, i) => {
                 const wrapper = document.createElement('div');
                 wrapper.className = 'box-wrapper';
                 wrapper.onclick = () => wrapper.classList.toggle('open');
+                
+                // Varied stripe colors for fun
+                const colors = ['#db4e4e', '#57915e', '#ff8da1'];
                 
                 wrapper.innerHTML = `
                     <div class="box-lid"></div>
@@ -308,6 +334,7 @@
             });
         }
 
+        // Initial Load
         reshuffleContent();
     </script>
 

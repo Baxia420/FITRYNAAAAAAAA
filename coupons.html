@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Gift Coupons ♡</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap" rel="stylesheet">
+    <style>
+        body {
+            overflow-y: auto;
+            height: auto;
+            padding-bottom: 100px;
+        }
+
+        /* --- Header Section --- */
+        .coupons-header {
+            margin-top: 30px;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .coupons-title {
+            font-family: 'Steph', sans-serif;
+            font-size: 2rem;
+            color: #db4e4e;
+            font-weight: bold;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 15px 35px;
+            border-radius: 25px;
+            display: inline-block;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        /* --- Coupons Container & Grid --- */
+        .coupons-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 25px;
+            margin: 40px auto;
+            max-width: 1100px;
+            padding: 0 20px;
+            justify-items: center;
+        }
+
+        /* Individual Coupon Card */
+        .coupon-card {
+            perspective: 1000px;
+            width: 200px;
+            height: 280px;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .coupon-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.72s cubic-bezier(0.22, 1, 0.36, 1);
+            transform-style: preserve-3d;
+            transform-origin: center;
+            will-change: transform;
+        }
+
+        .coupon-card {
+            perspective: 1400px;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .coupon-card:hover {
+            transform: translateY(-8px);
+            z-index: 5;
+        }
+
+        .coupon-card.flipped .coupon-inner {
+            transform: rotateY(180deg) translateZ(0);
+        }
+
+        /* Ticket emoji (front) styling */
+        .ticket-emoji {
+            position: relative;
+            width: 88px;
+            height: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            font-size: 2.2rem;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.25);
+            color: #fff;
+            margin-top: 8px;
+        }
+
+        /* decorative notches on left/right to look like a ticket */
+        .ticket-emoji::before,
+        .ticket-emoji::after {
+            content: "";
+            position: absolute;
+            width: 14px;
+            height: 20px;
+            background: transparent;
+            border-radius: 50%;
+            box-shadow: 0 0 0 8px rgba(255,255,255,0.02) inset;
+        }
+
+        .ticket-emoji::before { left: -8px; }
+        .ticket-emoji::after { right: -8px; }
+
+        .coupon-front, .coupon-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 6px;
+        }
+
+        /* ACTUAL COUPON STYLING */
+        .coupon-front {
+            background: white;
+            border: 2px solid #db4e4e;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            position: relative;
+        }
+
+        /* Dashed tear line in middle */
+        .coupon-front::after {
+            content: "";
+            position: absolute;
+            bottom: 100px;
+            left: 0;
+            width: 100%;
+            border-top: 2px dashed #db4e4e;
+        }
+
+        .coupon-icon {
+            font-size: 2.5rem;
+            margin-top: 10px;
+        }
+
+        .coupon-title {
+            font-family: 'Steph', sans-serif;
+            font-size: 1rem;
+            font-weight: bold;
+            color: #db4e4e;
+            text-align: center;
+            margin: 10px 0 0 0;
+        }
+
+        .coupon-footer {
+            font-family: 'Steph', sans-serif;
+            font-size: 0.9rem;
+            color: #666;
+            text-align: center;
+            font-style: italic;
+        }
+
+        /* Back of Coupon - Full Description */
+        .coupon-back {
+            background: linear-gradient(135deg, #db4e4e 0%, #ff6b85 100%);
+            border: 2px solid #c43b3b;
+            transform: rotateY(180deg);
+            display: flex;
+            flex-direction: column;
+            padding: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            overflow-y: auto;
+        }
+
+        .coupon-back-title {
+            font-family: 'Steph', sans-serif;
+            font-size: 0.95rem;
+            font-weight: bold;
+            color: white;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .coupon-back-description {
+            font-family: 'Indie Flower', cursive;
+            font-size: 0.85rem;
+            color: white;
+            text-align: center;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+
+        .coupon-back-uses {
+            font-family: 'Steph', sans-serif;
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.9);
+            background: rgba(0, 0, 0, 0.2);
+            padding: 6px 10px;
+            border-radius: 4px;
+            text-align: center;
+            margin-top: auto;
+        }
+
+        /* --- Final Message Section (hidden by default) --- */
+        .final-message-section {
+            display: none;
+            text-align: center;
+            margin: 40px auto;
+            animation: fadeIn 1s ease;
+        }
+
+        .final-message {
+            font-family: 'Indie Flower', cursive;
+            font-size: 0.95rem;
+            color: #333;
+            background: rgba(255, 255, 255, 0.85);
+            padding: 35px;
+            border-radius: 20px;
+            max-width: 700px;
+            margin: 0 auto 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            line-height: 1.7;
+        }
+
+        .final-message p {
+            margin: 15px 0;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .coupons-container {
+                grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+                gap: 20px;
+            }
+
+            .coupon-card {
+                width: 180px;
+                height: 260px;
+            }
+
+            .final-message {
+                padding: 25px;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .coupons-title {
+                font-size: 1.5rem;
+            }
+
+            .coupons-container {
+                grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+                gap: 15px;
+            }
+
+            .coupon-card {
+                width: 160px;
+                height: 240px;
+            }
+
+            .coupon-title {
+                font-size: 0.9rem;
+            }
+
+            .final-message {
+                padding: 20px;
+                font-size: 0.85rem;
+            }
+
+            .message-form {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="coupons-header">
+        <div class="coupons-title">Your Special Gift Coupons 🎟️</div>
+    </div>
+
+    <div class="coupons-container" id="coupons-grid">
+        <!-- Coupons will be generated here -->
+    </div>
+
+    <!-- Final Message (shown after all coupons clicked) -->
+    <div class="final-message-section" id="final-message-section">
+        <div class="final-message">
+            <p>
+                That is all i had in store for you today. I am sorry if it isn't to your liking. I am not really good at coding and this was my first real project so, mistakes were obviously made. I hope you liked it tho, took a lot more time than i am comfortable saying in public. If anyone asks, say i finished this shit in 2 hours (More like 20 hours but I cannot look bad in front of other people, only you)
+            </p>
+
+            <p>
+                Also, this website actually does not allow you to say No, I designed it in such a way. Although, i do not want you to feel pressured or anything. If you want to say no, you can say no, the option is open. I have never been one to force something on anyone and I dont intend to change that now.
+            </p>
+
+            <p>
+                And, thats it, I honestly do not know what else to say, never did anything like this, being transparent with my feelings and all. I wanted to get you flowers today, found a facebook page and everything but you are going back home and taking those flowers back home......yea...I would not want you to get into trouble. Realistically tho, you are gonna get into alot of trouble for dating me, and for that, I am sorry. If you change your mind, I will not fight it.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        const coupons = [
+            {
+                title: "Get Out of an Argument",
+                icon: "🛑",
+                color: "#db4e4e",
+                description: "Can be used to immediately end a minor disagreement and move on without further discussion.",
+                uses: "2"
+            },
+            {
+                title: "Hugs Hugs Hugs",
+                icon: "🤗",
+                color: "#ffb6c1",
+                description: "A hug, for you, anytime, anywhere, any moment.",
+                uses: "Unlimited"
+            },
+            {
+                title: "Ask me Anything",
+                icon: "❓",
+                color: "#c43b3b",
+                description: "You get to ask me a question, ANY QUESTION. I will have to answer completely honestly.",
+                uses: "2"
+            },
+            {
+                title: "Can we eat?",
+                icon: "🍽️",
+                color: "#ff8da1",
+                description: "We eat whatever you feel like, wherever you want, whatever the price (within my wallet lol). And I don't get to say no!",
+                uses: "2"
+            },
+            {
+                title: "Get out of Jail",
+                icon: "💚",
+                color: "#57915e",
+                description: "Made me angry? Use this to instantly make me okay again. Silly mistakes only! (No high-level crimes against my feelings)",
+                uses: "1"
+            }
+        ];
+
+        let clickedCoupons = new Set();
+
+        function initCoupons() {
+            const grid = document.getElementById('coupons-grid');
+            coupons.forEach((coupon, index) => {
+                const card = document.createElement('div');
+                card.className = 'coupon-card';
+                card.id = `coupon-${index}`;
+                card.innerHTML = `
+                    <div class="coupon-inner">
+                        <div class="coupon-front">
+                            <div class="ticket-emoji" style="background: linear-gradient(135deg, ${coupon.color} 0%, rgba(0,0,0,0.05) 100%);">
+                                🎟️
+                            </div>
+                            <div class="coupon-title">${coupon.title}</div>
+                            <div class="coupon-footer">Click to reveal</div>
+                        </div>
+                        <div class="coupon-back">
+                            <div class="coupon-back-title">${coupon.title}</div>
+                            <div class="coupon-back-description">${coupon.description}</div>
+                            <div class="coupon-back-uses">Uses: ${coupon.uses}</div>
+                        </div>
+                    </div>
+                `;
+                card.addEventListener('click', () => toggleCoupon(index, card));
+                grid.appendChild(card);
+            });
+        }
+
+        function toggleCoupon(index, card) {
+            card.classList.toggle('flipped');
+            
+            if (card.classList.contains('flipped')) {
+                clickedCoupons.add(index);
+            } else {
+                clickedCoupons.delete(index);
+            }
+
+            checkAllClicked();
+        }
+
+        function checkAllClicked() {
+            if (clickedCoupons.size === coupons.length) {
+                setTimeout(() => {
+                    document.getElementById('coupons-grid').style.display = 'none';
+                    document.getElementById('final-message-section').style.display = 'block';
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }, 500);
+            }
+        }
+
+        // Initialize on load
+        initCoupons();
+    </script>
+
+</body>
+</html>
