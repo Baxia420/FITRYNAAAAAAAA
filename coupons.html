@@ -66,6 +66,11 @@
             transform: translateY(-5px);
         }
 
+        /* FIXED: Increase z-index when tooltip is active */
+        .coupon-card.active {
+            z-index: 200;
+        }
+
         /* The Image itself */
         .coupon-bg-img {
             width: 100%;
@@ -74,7 +79,7 @@
             filter: drop-shadow(0 5px 10px rgba(0,0,0,0.15));
         }
 
-        /* Text Below the Coupon */
+        /* Text Below the Coupon - FIXED POSITIONING */
         .coupon-title-text { 
             font-family: 'Steph', sans-serif; 
             color: #db4e4e; 
@@ -83,10 +88,12 @@
             text-shadow: 1px 1px 0px rgba(255,255,255,0.4);
             text-align: center;
             line-height: 1.2;
-            margin-top: 5px; 
+            margin-top: -85px; /* FIXED: Pull text up to compensate for transparent space in image */
             background: rgba(255,255,255,0.6);
             padding: 2px 12px;
             border-radius: 12px;
+            position: relative;
+            z-index: 5;
         }
 
         /* Grid Placement */
@@ -104,7 +111,7 @@
             padding: 12px;
             border-radius: 10px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-            z-index: 100;
+            z-index: 300; /* FIXED: Increased z-index to appear above everything */
             text-align: center;
             animation: popIn 0.3s ease;
         }
@@ -237,6 +244,9 @@
             body { overflow-y: auto; height: auto; padding: 20px 0;}
             .coupons-container { grid-template-columns: 1fr; row-gap: 30px;}
             .coupon-card { grid-column: span 1 !important; max-width: 280px; }
+            
+            /* Adjust text spacing for mobile too */
+            .coupon-title-text { margin-top: -25px; }
             
             /* Reset tooltips for mobile */
             .coupon-card:nth-child(1) .coupon-tooltip,
