@@ -28,7 +28,8 @@
             justify-content: center;
             width: 95%;
             max-width: 1600px;
-            gap: 50px; /* Increased gap to separate the letters more */
+            gap: 50px; 
+            z-index: 10; /* Important for hearts to flow behind */
         }
 
         /* --- Left Column: Garfield --- */
@@ -109,7 +110,7 @@
             text-align: center;
             font-size: 0.9rem;
             color: #888;
-            margin-top: auto; /* Pushes it to the bottom of the flex container */
+            margin-top: auto; 
             padding-top: 20px;
             font-weight: bold;
         }
@@ -160,14 +161,11 @@
 
     <div class="main-container">
         
-        <!-- 1. LEFT: Garfield -->
         <div class="garfield-section">
             <img src="assets/images/garfield.gif" id="garfield-img" alt="Garfield">
         </div>
 
-        <!-- 2. CENTER: Wrapper for Page 1 + Button -->
         <div class="center-column">
-            <!-- Part 1 of Letter -->
             <div class="letter-page page-1">
                 <p><strong>Dearest Fitryna</strong>,</p>
                 <p>
@@ -180,13 +178,11 @@
                 <div class="turn-page-note">(Letter continues on right...)</div>
             </div>
 
-            <!-- Button OUTSIDE the letter -->
             <button class="moments-btn" onclick="window.location.href='moments.html'">
                 Some of our best moments SO far. ➜
             </button>
         </div>
 
-        <!-- 3. RIGHT: Part 2 of Letter -->
         <div class="letter-page page-2">
             <p>
                 It’s the little things that really got me like the way you’re so shy about your English when I think every word you say is perfect. You told me once that you never met someone who truly wanted to know you, and I want you to know I’ve never been more sure about wanting to know every part of your story. I know you said you’d wait for me to be ready, but the truth is, I’ve been waiting for someone like you this whole time.
@@ -202,5 +198,6 @@
 
     </div>
 
+    <script src="script.js"></script>
 </body>
 </html>

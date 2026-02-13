@@ -7,24 +7,20 @@
     <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <style>
-        /* Base Setup */
+        /* This internal CSS is specific to the Envelope Page */
         body { 
             background-image: url("heart-bg.jpg"); 
             background-size: cover; 
             height: 100vh;
             display: flex;
-            
-            /* --- MOVED CONTENT UPWARDS --- */
-            flex-direction: column; /* Ensures vertical stacking */
+            flex-direction: column; 
             align-items: center; 
-            justify-content: flex-start; /* Aligns content to the top */
-            padding-top: 60px; /* Adjusts how far from the top it sits */
-            
+            justify-content: flex-start;
+            padding-top: 60px;
             margin: 0;
             overflow: hidden; 
             font-family: 'Arial', sans-serif;
         }
-
         .intro-wrapper { 
             display: flex; 
             flex-direction: column; 
@@ -32,29 +28,25 @@
             text-align: center; 
             width: 90%;
             max-width: 1200px;
+            z-index: 10;
         }
-
-        /* --- ANIMATIONS --- */
-        @keyframes sparkle {
+        @keyframes sparkle-env {
             0% { transform: scale(1); filter: drop-shadow(0 0 0px #fff); }
             50% { transform: scale(1.05); filter: drop-shadow(0 0 20px #fff); }
             100% { transform: scale(1); filter: drop-shadow(0 0 0px #fff); }
         }
-
-        /* --- ENVELOPE SECTION --- */
         #envelope-container { 
             cursor: pointer; 
             display: flex;
             flex-direction: column;
             align-items: center;
             transition: transform 0.2s;
-            /* Center envelope vertically if it's the only thing showing */
             margin-top: 15vh; 
         }
         #envelope-container:hover { transform: scale(1.02); }
         #envelope { 
             width: 350px; height: auto; margin-bottom: 20px; 
-            animation: sparkle 2s infinite ease-in-out; 
+            animation: sparkle-env 2s infinite ease-in-out; 
         }
         .prompt-text {
             font-size: 2.2rem; font-weight: bold; color: #db4e4e;
@@ -62,8 +54,6 @@
             background: rgba(255, 255, 255, 0.6); 
             padding: 10px 25px; border-radius: 20px; display: inline-block;
         }
-
-        /* --- THE LETTER SECTION --- */
         #message-content { 
             display: none; 
             align-items: center; 
@@ -73,12 +63,10 @@
             width: 100%;
             animation: fadeIn 1s ease; 
         }
-
         .letter-paper { 
             flex: 1;
             max-width: 800px;
             background-color: #fffef0; 
-            /* Grid lines adjusted for the larger font */
             background-image: repeating-linear-gradient(to bottom, transparent 0px, transparent 39px, #AFCBFF 40px);
             line-height: 40px; 
             padding: 30px 40px;
@@ -89,7 +77,6 @@
             text-align: left;
             position: relative;
         }
-
         #timer {
             font-weight: bold;
             color: #db4e4e;
@@ -97,22 +84,20 @@
             padding: 0 5px;
             border-radius: 5px;
         }
-
         .side-cat { width: 180px; height: auto; }
         .dancing-kitty { margin-top: -60px; }
-
         #proceed-btn { 
             display: none; margin-top: 40px; background-color: #ff8da1; color: white; 
             padding: 15px 40px; font-size: 1.6rem; cursor: pointer; border: none; 
             border-radius: 12px; font-weight: bold; font-family: sans-serif;
+            position: relative; z-index: 100;
         }
-
         @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         
         @media (max-width: 900px) {
             #message-content { flex-direction: column; gap: 20px; }
             .side-cat { width: 120px; }
-            .letter-paper { width: 90%; font-size: 1.6rem; line-height: 30px; background-image: repeating-linear-gradient(to bottom, transparent 0px, transparent 29px, #AFCBFF 30px); order: -1;}
+            .letter-paper { width: 90%; font-size: 1.6rem; line-height: 30px; order: -1;}
             .dancing-kitty { margin-top: 0; }
         }
     </style>
@@ -147,6 +132,8 @@
         <button id="proceed-btn" onclick="window.location.href='main.html'">Click to Continue</button>
     </div>
 
+    <script src="script.js"></script>
+
     <script>
         function openLetter() {
             document.getElementById('envelope-container').style.display = 'none';
@@ -172,8 +159,7 @@
             const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-            document.getElementById("timer").innerHTML = 
-                days + "d " + hours + "h " + minutes + "m " + seconds + "s";
+            document.getElementById("timer").innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s";
         }
     </script>
 </body>

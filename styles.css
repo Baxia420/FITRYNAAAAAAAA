@@ -1,3 +1,4 @@
+/* --- Keep all your existing styles (Container, Fonts, Hearts, etc.) --- */
 :root {
     --gap-scale-factor: 250;
 }
@@ -6,7 +7,7 @@ html, body {
     height: 100%;
     margin: 0;
     padding: 0;
-    overflow: hidden;
+    overflow-x: hidden;
 }
 
 body {
@@ -19,6 +20,7 @@ body {
     background-image: url("heart-bg.jpg"); 
     background-size: cover;
     font-family: "Steph", sans-serif;
+    position: relative;
 }
 
 @font-face {
@@ -33,7 +35,6 @@ body {
     font-weight: bold;
 }
 
-/* Frosted Glass Container for Yay page readability */
 .container {
     max-width: 90%;
     margin: 20px auto 0 auto;
@@ -44,6 +45,8 @@ body {
     display: inline-block;
     border: 1px solid rgba(255, 255, 255, 0.4);
     box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    position: relative;
+    z-index: 10;
 }
 
 #togepi-gif {
@@ -94,63 +97,64 @@ button {
     transition: transform 0.1s ease;
 }
 
-button:hover {
-    transform: scale(1.05);
+button:hover { transform: scale(1.05); }
+
+#yes-btn { transform-origin: center; color: white; background-color: #57915e; }
+#no-btn { color: white; background-color: #db4e4e; min-width: 180px; padding: 10px 20px; }
+
+/* --- GLOBAL FLOATING HEARTS --- */
+.floating-heart {
+    position: fixed;
+    top: 100vh;
+    animation: floatUp linear forwards;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.9;
 }
 
-#yes-btn {
-    transform-origin: center;
-    color: white;
-    background-color: #57915e;
+@keyframes floatUp {
+    to {
+        transform: translateY(-120vh) rotate(360deg);
+        opacity: 0;
+    }
 }
 
-#no-btn {
-    color: white;
-    background-color: #db4e4e;
-    min-width: 180px; 
-    padding: 10px 20px;
+/* --- UPDATED SPARKLES (Bigger & Glowing) --- */
+.sparkle {
+    position: absolute;
+    /* Increased size for prominence */
+    width: 40px; 
+    height: 40px;
+    background: gold;
+    /* Star shape */
+    clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+    /* Added drop-shadow for a "glow" effect */
+    filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.8));
+    animation: popFade 1.5s ease-out forwards;
+    z-index: 100;
+    pointer-events: none;
 }
 
-/* Responsiveness for Tablets */
+@keyframes popFade {
+    0% { transform: scale(0) rotate(0deg); opacity: 1; }
+    50% { transform: scale(1.2) rotate(180deg); opacity: 1; } /* Popped slightly larger */
+    100% { transform: scale(0) rotate(360deg); opacity: 0; }
+}
+
+/* Responsiveness */
 @media (max-width: 1150px) {
-    body {
-        padding-top: 70px;
-    }
-    #togepi-gif {
-        width: 380px;
-        height: 304px;
-    }
-    h1, .header_text {
-        font-size: 2rem;
-    }
-    .btn-container {
-        gap: 20px;
-    }
+    body { padding-top: 70px; }
+    #togepi-gif { width: 380px; height: 304px; }
+    h1, .header_text { font-size: 2rem; }
+    .btn-container { gap: 20px; }
 }
 
-/* Responsiveness for Mobile */
 @media (max-width: 600px) {
-    body {
-        padding-top: 100px;
-    }
-    .container {
-        padding: 20px;
-    }
-    #togepi-gif {
-        width: 280px;
-        height: 224px;
-    }
-    h1, .header_text {
-        font-size: 1.4rem;
-    }
-    .text-small {
-        font-size: 1rem;
-    }
-    .btn-container {
-        gap: 10px;
-    }
-    button {
-        min-width: 120px;
-        font-size: 0.8rem;
-    }
+    body { padding-top: 100px; }
+    .container { padding: 20px; }
+    #togepi-gif { width: 280px; height: 224px; }
+    h1, .header_text { font-size: 1.4rem; }
+    .text-small { font-size: 1rem; }
+    .btn-container { gap: 10px; }
+    button { min-width: 120px; font-size: 0.8rem; }
 }
