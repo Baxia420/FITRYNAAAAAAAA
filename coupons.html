@@ -28,8 +28,19 @@
             border-radius: 25px;
             display: inline-block; 
             box-shadow: 0 4px 10px rgba(0,0,0,0.05); 
-            margin-bottom: 20px; 
+            margin-bottom: 5px; /* Reduced margin to fit subtitle */
             z-index: 10;
+        }
+
+        .coupons-subtitle {
+            font-family: 'Indie Flower', cursive;
+            font-size: 1.2rem;
+            color: #db4e4e; /* Updated to match title color */
+            margin-bottom: 20px;
+            font-weight: bold;
+            background: rgba(255, 255, 255, 0.5);
+            padding: 5px 15px;
+            border-radius: 15px;
         }
 
         /* --- Grid Layout --- */
@@ -267,6 +278,7 @@
 <body>
 
     <div class="coupons-title">Your Special Gift Coupons 🎟️</div>
+    <div class="coupons-subtitle">(Click a coupon to reveal details!)</div>
 
     <div class="coupons-container" id="coupons-grid"></div>
 
